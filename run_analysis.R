@@ -2,7 +2,7 @@
 mergedata <- function() {
     
     # features.txt has a description of each column
-    features <- read.table("UCI HAR Dataset//features.txt")
+    features <- read.table("UCI HAR Dataset/features.txt")
 
     # Extract the number of the columns we were requested (mean and std)
     columns <- grep("[mM]ean|[sS]td", features[,2])
@@ -21,7 +21,7 @@ mergedata <- function() {
     names(xtrain) <- tolower(gsub("[(|)|,|-]", "", features[columns, 2]))
 
     # activity_labels.txt has the name of each activity
-    activitylabels <- read.table("UCI HAR Dataset//activity_labels.txt", sep=" ", col.names = c("activityid", "activity"))
+    activitylabels <- read.table("UCI HAR Dataset/activity_labels.txt", sep=" ", col.names = c("activityid", "activity"))
     
     # Merge of the activity recored with its label
     ytestlabeled <- merge(ytest, activitylabels, by="activityid", sort=FALSE, all.x=TRUE)
@@ -38,5 +38,5 @@ mergedata <- function() {
 
 avgdata <- function(x) {
     tmp <- aggregate(. ~ personid + activity, data, mean)
-    tmp[order(tmp$personid, tmp$activity), ]
+    tmp[order(tmp$activity, tmp$personid), ]
 }
